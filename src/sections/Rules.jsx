@@ -1,94 +1,12 @@
 import React, { useState } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
+import { reglamentoOficial } from '../data/reglamento';
 
 const Rules = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [openIndex, setOpenIndex] = useState(0);
 
-  const ruleCategories = [
-    {
-      title: "1. Información General",
-      rules: [
-        "El torneo se rige bajo las normas oficiales de Supremacy 1914 y las específicas de la comunidad Batallón Supremacy.",
-        "La organización se reserva el derecho de admisión y expulsión ante conductas antideportivas."
-      ]
-    },
-    {
-      title: "2. Participación",
-      rules: [
-        "Inscripción obligatoria mediante esta web.",
-        "Uso de Discord para comunicaciones oficiales.",
-        "Identidad real del juego (Nombre de usuario e ID correctos)."
-      ]
-    },
-    {
-      title: "3. Configuración",
-      rules: [
-        "Mapa de 500 jugadores a velocidad x2.",
-        "Periodo de paz de 12 horas reales.",
-        "Selección de país aleatoria al inicio."
-      ]
-    },
-    {
-      title: "4. Mercado",
-      rules: [
-        "Prohibido el traspaso masivo de recursos para inflar a un solo jugador (pushing).",
-        "Transacciones comerciales deben ser razonables bajo valor de mercado."
-      ]
-    },
-    {
-      title: "5. Diplomacia",
-      rules: [
-        "Coaliciones permitidas según límite del mapa.",
-        "Traiciones son parte del juego, pero el acoso personal está prohibido."
-      ]
-    },
-    {
-      title: "6. Actividad",
-      rules: [
-        "Jugadores inactivos por más de 2 días serán sustituidos o expulsados según criterio de admin.",
-        "Reportar ausencias justificadas en Discord."
-      ]
-    },
-    {
-      title: "7. Conducta",
-      rules: [
-        "Respeto absoluto en el chat del periódico y mensajes privados.",
-        "Prohibido el lenguaje ofensivo, racista o discriminatorio."
-      ]
-    },
-    {
-      title: "8. Faltas críticas",
-      rules: [
-        "Uso de multicuentas (Baneo permanente).",
-        "Uso de scripts o software externo no autorizado.",
-        "Colusión externa fuera de las reglas del torneo."
-      ]
-    },
-    {
-      title: "9. Sanciones",
-      rules: [
-        "Advertencia escrita.",
-        "Reducción de puntos o recursos.",
-        "Expulsión inmediata del torneo actual."
-      ]
-    },
-    {
-      title: "10. Reportes y apelaciones",
-      rules: [
-        "Usar la sección de reportes de la web detallando la falta.",
-        "Las decisiones de los administradores son inapelables tras revisión final."
-      ]
-    },
-    {
-      title: "11. Disposición final",
-      rules: [
-        "Cualquier situación no prevista será resuelta por el comité organizador."
-      ]
-    }
-  ];
-
-  const filteredCategories = ruleCategories.filter(cat => 
+  const filteredCategories = reglamentoOficial.filter(cat => 
     cat.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     cat.rules.some(r => r.toLowerCase().includes(searchTerm.toLowerCase()))
   );

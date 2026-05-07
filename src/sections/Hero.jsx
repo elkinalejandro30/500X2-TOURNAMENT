@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -11,6 +11,14 @@ const Hero = () => {
   });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: '', msg: '' });
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('tournament_user');
+    if (savedUser) {
+      setIsRegistered(true);
+    }
+  }, []);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -19,7 +27,7 @@ const Hero = () => {
 
   const handleQuickRegister = async (e) => {
     e.preventDefault();
-    if (!quickForm.username || loading) return;
+    if (!quickForm.username || loading || isRegistered) return;
 
     setLoading(true);
     try {
@@ -30,9 +38,15 @@ const Hero = () => {
         source: 'quick_hero'
       });
       
+      localStorage.setItem('tournament_user', JSON.stringify({
+        username: quickForm.username,
+        gameId: quickForm.gameId,
+        date: new Date().toISOString()
+      }));
+
       setStatus({ type: 'success', msg: '¡Pre-registro exitoso! Redirigiendo...' });
+      setIsRegistered(true);
       
-      // Navigate after a small delay to show success message
       setTimeout(() => {
         navigate('/registro-reportes', { state: { quickForm } });
       }, 1500);
@@ -71,40 +85,61 @@ const Hero = () => {
 
         {/* Quick Registration Form */}
         <div className="max-w-md mx-auto glass-dark p-1 rounded-2xl glow shadow-2xl transition-transform hover:scale-[1.01] duration-500">
-          <form onSubmit={handleQuickRegister} className="bg-militar-dark/40 p-8 rounded-2xl backdrop-blur-xl border border-white/5">
-            <div className="flex flex-col space-y-5">
-              <input 
-                type="text" 
-                name="username"
-                required
-                placeholder="Nombre de usuario del juego"
-                value={quickForm.username}
-                onChange={handleChange}
-                className="w-full bg-militar-dark/60 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-militar-accent transition-all text-sm"
-              />
-              <input 
-                type="text" 
-                name="gameId"
-                placeholder="ID del juego (Opcional)"
-                value={quickForm.gameId}
-                onChange={handleChange}
-                className="w-full bg-militar-dark/60 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-militar-accent transition-all text-sm"
-              />
-              <button 
-                type="submit"
-                disabled={loading}
-                className="w-full bg-militar-accent hover:bg-militar-accent/90 text-militar-dark font-black py-5 rounded-xl uppercase tracking-[0.25em] transition-all duration-300 transform active:scale-[0.97] shadow-[0_0_20px_rgba(196,164,86,0.3)] hover:shadow-[0_0_30px_rgba(196,164,86,0.5)] disabled:opacity-50"
-              >
-                {loading ? 'Procesando...' : 'Registrarse Ahora'}
-              </button>
-            </div>
-            {status.msg && (
-              <div className={`mt-4 text-xs font-bold uppercase tracking-widest ${status.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
-                {status.msg}
+          <div className="bg-militar-dark/40 p-8 rounded-2xl backdrop-blur-xl border border-white/5">
+            {isRegistered ? (
+              <div className="py-8 animate-in zoom-in duration-500">
+                <div className="w-16 h-16 bg-militar-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-militar-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-black text-white uppercase tracking-tight mb-2">Ya estás registrado</h3>
+                <p className="text-militar-light/40 text-xs uppercase tracking-widest font-bold">¡Nos vemos en el campo de batalla!</p>
+                <button 
+                  onClick={() => navigate('/registro-reportes')}
+                  className="mt-8 text-militar-accent text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-colors"
+                >
+                  Ver mis datos
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handleQuickRegister}>
+                <div className="flex flex-col space-y-5">
+                  <input 
+                    type="text" 
+                    name="username"
+                    required
+                    placeholder="Nombre de usuario del juego"
+                    value={quickForm.username}
+                    onChange={handleChange}
+                    className="w-full bg-militar-dark/60 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-militar-accent transition-all text-sm"
+                  />
+                  <input 
+                    type="text" 
+                    name="gameId"
+                    placeholder="ID del juego (Opcional)"
+                    value={quickForm.gameId}
+                    onChange={handleChange}
+                    className="w-full bg-militar-dark/60 border border-white/10 rounded-xl px-5 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-militar-accent transition-all text-sm"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-militar-accent hover:bg-militar-accent/90 text-militar-dark font-black py-5 rounded-xl uppercase tracking-[0.25em] transition-all duration-300 transform active:scale-[0.97] shadow-[0_0_20px_rgba(196,164,86,0.3)] hover:shadow-[0_0_30px_rgba(196,164,86,0.5)] disabled:opacity-50"
+                  >
+                    {loading ? 'Procesando...' : 'Registrarse Ahora'}
+                  </button>
+                </div>
+                {status.msg && (
+                  <div className={`mt-4 text-xs font-bold uppercase tracking-widest ${status.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+                    {status.msg}
+                  </div>
+                )}
+              </form>
             )}
-          </form>
+          </div>
         </div>
+
         
         {/* Live Status Indicators */}
         <div className="mt-16 flex flex-wrap justify-center gap-8 text-[10px] md:text-xs uppercase tracking-[0.3em] text-militar-light/50 font-bold">

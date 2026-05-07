@@ -15,7 +15,7 @@ export default {
         }
       },
       backgroundImage: {
-        'hero-pattern': "linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(10,11,13,1)), url('https://images.unsplash.com/photo-1590236162974-82136c667433?q=80&w=2000&auto=format&fit=crop')", // Higher quality military aesthetic
+        'hero-pattern': "linear-gradient(to bottom, rgba(10,11,13,0.3), rgba(10,11,13,1)), url('https://images.unsplash.com/photo-1579546671170-b368913fa396?q=80&w=2000&auto=format&fit=crop')", // High quality dark tactical background
       },
       animation: {
         'slow-zoom': 'slow-zoom 20s ease-in-out infinite alternate',

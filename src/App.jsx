@@ -8,6 +8,7 @@ import Reglamento from './pages/Reglamento';
 import InfoMapa from './pages/InfoMapa';
 import RegistroReportes from './pages/RegistroReportes';
 import Anuncios from './pages/Anuncios';
+import Estadisticas from './pages/Estadisticas';
 import Admin from './pages/Admin';
 
 // Scroll to top on route change
@@ -77,6 +78,7 @@ function App() {
             <Route path="/info-mapa" element={<InfoMapa />} />
             <Route path="/registro-reportes" element={<RegistroReportes />} />
             <Route path="/anuncios" element={<Anuncios />} />
+            <Route path="/estadisticas" element={<Estadisticas />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>

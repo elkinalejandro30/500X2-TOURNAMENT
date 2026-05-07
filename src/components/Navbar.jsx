@@ -18,6 +18,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Inicio', path: '/' },
     { name: 'Anuncios', path: '/anuncios' },
+    { name: 'Estadísticas', path: '/estadisticas' },
     { name: 'Info del Mapa', path: '/info-mapa' },
     { name: 'Registro / Reportes', path: '/registro-reportes' },
     { name: 'Reglamento', path: '/reglamento' },
