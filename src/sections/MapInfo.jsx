@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, Zap, Shuffle, Users2, ShieldAlert, Trophy, UserCheck, Plane, Sword, Coins, CreditCard } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const MapInfo = () => {
   const specs = [
@@ -10,7 +11,6 @@ const MapInfo = () => {
     { icon: <ShieldAlert size={24} />, label: "Paz Jugadores", value: "12 horas" },
     { icon: <ShieldAlert size={24} />, label: "Paz con IA", value: "0 horas" },
     { icon: <Trophy size={24} />, label: "Victoria", value: "Al 75%" },
-    { icon: <Zap size={24} />, label: "Duración", value: "Estimada 30-45 días" },
     { icon: <UserCheck size={24} />, label: "Héroes", value: "Permitidos" },
     { icon: <Plane size={24} />, label: "Zepelines", value: "Permitidos" },
     { icon: <Sword size={24} />, label: "Unidades", value: "Asalto Permitidas" },
@@ -22,16 +22,25 @@ const MapInfo = () => {
     <section id="info-mapa" className="py-24 px-6 relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4"
+          >
             Información del <span className="text-militar-accent">Mapa</span>
-          </h2>
+          </motion.h2>
           <div className="w-24 h-1 bg-militar-accent mx-auto rounded-full" />
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
           {specs.map((spec, index) => (
-            <div 
+            <motion.div 
               key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
               className={`glass p-8 rounded-2xl border border-white/5 hover:border-militar-accent/30 transition-all group flex flex-col items-center text-center ${spec.color ? 'bg-red-900/5' : ''}`}
             >
               <div className={`w-12 h-12 rounded-full bg-militar-accent/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform ${spec.color || 'text-militar-accent'}`}>
@@ -43,7 +52,7 @@ const MapInfo = () => {
               <p className="text-lg font-bold text-white uppercase tracking-tight">
                 {spec.value}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
