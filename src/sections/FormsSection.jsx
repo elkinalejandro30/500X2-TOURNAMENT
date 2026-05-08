@@ -42,19 +42,6 @@ const FormsSection = () => {
   const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
-    // Handle hash scrolling
-    if (location.hash) {
-      const id = location.hash.replace('#', '');
-      const element = document.getElementById(id);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    }
-  }, [location.hash]);
-
-  useEffect(() => {
     const savedUser = localStorage.getItem('tournament_user');
     if (savedUser) {
       setIsRegistered(true);
@@ -256,7 +243,7 @@ const FormsSection = () => {
         </div>
 
         {/* Reports Section */}
-        <div id="reportes" className="glass p-10 rounded-3xl border border-white/5 relative overflow-hidden bg-red-900/5">
+        <div className="glass p-10 rounded-3xl border border-white/5 relative overflow-hidden bg-red-900/5">
           <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl -mr-16 -mt-16" />
           
           <h2 className="text-3xl font-black text-white uppercase mb-8 flex items-center space-x-3">
@@ -322,7 +309,7 @@ const FormsSection = () => {
 
       {/* Global Status Notification */}
       {status.msg && (
-        <div className={`fixed bottom-10 right-10 px-8 py-4 rounded-2xl shadow-2xl z-[100] border ${status.type === 'success' ? 'bg-green-600 border-green-400' : 'bg-red-600 border-red-400'} text-white font-bold`}>
+        <div className={`fixed bottom-10 right-10 px-8 py-4 rounded-2xl shadow-2xl animate-in slide-in-from-bottom-10 z-[100] border ${status.type === 'success' ? 'bg-green-600 border-green-400' : 'bg-red-600 border-red-400'} text-white font-bold`}>
           {status.msg}
         </div>
       )}

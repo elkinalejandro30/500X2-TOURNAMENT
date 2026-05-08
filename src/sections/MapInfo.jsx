@@ -10,6 +10,7 @@ const MapInfo = () => {
     { icon: <ShieldAlert size={24} />, label: "Paz Jugadores", value: "12 horas" },
     { icon: <ShieldAlert size={24} />, label: "Paz con IA", value: "0 horas" },
     { icon: <Trophy size={24} />, label: "Victoria", value: "Al 75%" },
+    { icon: <Zap size={24} />, label: "Duración", value: "Estimada 30-45 días" },
     { icon: <UserCheck size={24} />, label: "Héroes", value: "Permitidos" },
     { icon: <Plane size={24} />, label: "Zepelines", value: "Permitidos" },
     { icon: <Sword size={24} />, label: "Unidades", value: "Asalto Permitidas" },

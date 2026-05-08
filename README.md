@@ -1,58 +1,17 @@
-# 500X2 TOURNAMENT | Batallón Supremacy
+# React + Vite
 
-> “Conquista el mapa. Domina la guerra.”
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Portal oficial del torneo competitivo **500X2** de Supremacy 1914. Una plataforma diseñada para la gestión de registros, reportes y estadísticas en tiempo real para la comunidad competitiva de eSports.
+Currently, two official plugins are available:
 
-## 🚀 Características AAA
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-- **Animaciones Cinematográficas**: Transiciones fluidas entre páginas y elementos con scroll dinámico usando `Framer Motion`.
-- **Estado en Tiempo Real**: Sincronización instantánea de estadísticas y clasificaciones mediante `Firebase Firestore (onSnapshot)`.
-- **Interfaz Militar Premium**: Diseño moderno con efectos de glassmorphism, optimizado para una experiencia inmersiva.
-- **Micro-interacciones**: Feedback visual y sonoro (clics mecánicos) para mejorar el UX.
-- **Seguridad de Interfaz**: Protecciones básicas contra inspección simple de código para mantener la integridad visual.
+## React Compiler
 
-## 🛠️ Tecnologías
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-- **Frontend**: React 19 + Vite
-- **Estilos**: Tailwind CSS 4
-- **Animaciones**: Framer Motion
-- **Backend**: Firebase (Firestore)
-- **Iconos**: Lucide React
+## Expanding the ESLint configuration
 
-## 📦 Instalación
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/elkinalejandro30/500X2-TOURNAMENT.git
-   ```
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-3. Configura las variables de entorno (`.env`):
-   Crea un archivo `.env` en la raíz con tus credenciales de Firebase:
-   ```env
-   VITE_FIREBASE_API_KEY=tu_api_key
-   VITE_FIREBASE_AUTH_DOMAIN=tu_auth_domain
-   VITE_FIREBASE_PROJECT_ID=tu_project_id
-   VITE_FIREBASE_STORAGE_BUCKET=tu_storage_bucket
-   VITE_FIREBASE_MESSAGING_SENDER_ID=tu_sender_id
-   VITE_FIREBASE_APP_ID=tu_app_id
-   ```
-4. Inicia el servidor de desarrollo:
-   ```bash
-   npm run dev
-   ```
-
-## 🚢 Despliegue
-
-El proyecto está configurado para desplegarse fácilmente en GitHub Pages:
-
-```bash
-npm run deploy
-```
-
----
-Desarrollado para la comunidad de **Supremacy 1914**.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
