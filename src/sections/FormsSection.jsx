@@ -3,16 +3,10 @@ import { useLocation } from 'react-router-dom';
 import { db } from '../firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { Send, AlertTriangle, CheckCircle2, MessageSquare, Phone } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 // Memoized Input component to prevent focus loss and unnecessary re-renders
 const CustomInput = memo(({ label, required, ...props }) => (
-  <motion.div 
-    initial={{ opacity: 0, x: -10 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    className="flex flex-col space-y-2"
-  >
+  <div className="flex flex-col space-y-2">
     <label className="text-[10px] uppercase tracking-widest text-militar-light/40 font-bold ml-1">
       {label} {required && <span className="text-militar-accent">*</span>}
     </label>
@@ -20,14 +14,13 @@ const CustomInput = memo(({ label, required, ...props }) => (
       {...props}
       className="bg-militar-dark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-militar-accent transition-all placeholder:text-white/10"
     />
-  </motion.div>
+  </div>
 ));
 
 CustomInput.displayName = 'CustomInput';
 
 const FormsSection = () => {
   const location = useLocation();
-  // ... resto del estado
   const [regForm, setRegForm] = useState({
     username: '',
     gameId: '',
@@ -47,13 +40,6 @@ const FormsSection = () => {
   const [status, setStatus] = useState({ type: '', msg: '' });
   const [loading, setLoading] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
-
-  // Micro-interacción: Sonido
-  const playClick = () => {
-    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
-    audio.volume = 0.15;
-    audio.play().catch(() => {});
-  };
 
   useEffect(() => {
     // Handle hash scrolling
@@ -112,7 +98,6 @@ const FormsSection = () => {
   const handleRegSubmit = async (e) => {
     e.preventDefault();
     if (loading || isRegistered) return;
-    playClick();
     setLoading(true);
 
     const sanitizedForm = {
@@ -153,7 +138,6 @@ const FormsSection = () => {
       return;
     }
 
-    playClick();
     setLoading(true);
     try {
       // Save report data to DB first
@@ -186,13 +170,7 @@ const FormsSection = () => {
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
         
         {/* Registration Form */}
-        <motion.div 
-          id="registro" 
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="glass p-10 rounded-3xl border border-white/5 relative overflow-hidden"
-        >
+        <div id="registro" className="glass p-10 rounded-3xl border border-white/5 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-militar-accent/5 rounded-full blur-3xl -mr-16 -mt-16" />
           
           <h2 className="text-3xl font-black text-white uppercase mb-8 flex items-center space-x-3">
@@ -201,17 +179,13 @@ const FormsSection = () => {
           </h2>
 
           {isRegistered ? (
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-militar-accent/5 border border-militar-accent/20 p-8 rounded-2xl text-center"
-            >
+            <div className="bg-militar-accent/5 border border-militar-accent/20 p-8 rounded-2xl text-center">
               <div className="w-16 h-16 bg-militar-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle2 className="text-militar-accent" size={32} />
               </div>
               <h3 className="text-xl font-black text-white uppercase mb-2">Ya estás registrado en el torneo</h3>
               <p className="text-militar-light/40 text-xs uppercase tracking-widest font-bold">Tus datos han sido guardados correctamente.</p>
-            </motion.div>
+            </div>
           ) : (
             <form onSubmit={handleRegSubmit} className="grid md:grid-cols-2 gap-6">
               <CustomInput 
@@ -273,23 +247,16 @@ const FormsSection = () => {
               <button 
                 type="submit"
                 disabled={loading}
-                onMouseEnter={playClick}
                 className="md:col-span-2 bg-militar-accent hover:bg-militar-accent/90 text-militar-dark font-black py-4 rounded-xl uppercase tracking-[0.2em] transition-all transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 flex items-center justify-center space-x-2 shadow-lg glow-hover"
               >
                 {loading ? "Procesando..." : <><span>Completar Registro</span> <Send size={18}/></>}
               </button>
             </form>
           )}
-        </motion.div>
+        </div>
 
         {/* Reports Section */}
-        <motion.div 
-          id="reportes" 
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="glass p-10 rounded-3xl border border-white/5 relative overflow-hidden bg-red-900/5"
-        >
+        <div id="reportes" className="glass p-10 rounded-3xl border border-white/5 relative overflow-hidden bg-red-900/5">
           <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl -mr-16 -mt-16" />
           
           <h2 className="text-3xl font-black text-white uppercase mb-8 flex items-center space-x-3">
@@ -331,7 +298,6 @@ const FormsSection = () => {
               <button 
                 onClick={() => handleExternalReport('discord')}
                 disabled={loading}
-                onMouseEnter={playClick}
                 className="bg-[#5865F2] hover:bg-[#4752C4] text-white font-black py-4 rounded-xl uppercase tracking-[0.15em] transition-all flex items-center justify-center space-x-3 shadow-lg group"
               >
                 <MessageSquare className="group-hover:scale-110 transition-transform" />
@@ -340,7 +306,6 @@ const FormsSection = () => {
               <button 
                 onClick={() => handleExternalReport('whatsapp')}
                 disabled={loading}
-                onMouseEnter={playClick}
                 className="bg-[#25D366] hover:bg-[#1DA851] text-white font-black py-4 rounded-xl uppercase tracking-[0.15em] transition-all flex items-center justify-center space-x-3 shadow-lg group"
               >
                 <Phone className="group-hover:scale-110 transition-transform" />
@@ -351,23 +316,16 @@ const FormsSection = () => {
               Se registrará el reporte en nuestra base de datos antes de redirigirte.
             </p>
           </div>
-        </motion.div>
+        </div>
 
       </div>
 
       {/* Global Status Notification */}
-      <AnimatePresence>
-        {status.msg && (
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className={`fixed bottom-10 right-10 px-8 py-4 rounded-2xl shadow-2xl z-[100] border ${status.type === 'success' ? 'bg-green-600 border-green-400' : 'bg-red-600 border-red-400'} text-white font-bold`}
-          >
-            {status.msg}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {status.msg && (
+        <div className={`fixed bottom-10 right-10 px-8 py-4 rounded-2xl shadow-2xl z-[100] border ${status.type === 'success' ? 'bg-green-600 border-green-400' : 'bg-red-600 border-red-400'} text-white font-bold`}>
+          {status.msg}
+        </div>
+      )}
     </section>
   );
 };

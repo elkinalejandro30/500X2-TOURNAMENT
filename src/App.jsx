@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -19,22 +18,6 @@ const ScrollToTop = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return null;
-};
-
-// Wrapper component for page transitions
-const PageWrapper = ({ children }) => {
-  const location = useLocation();
-  return (
-    <motion.div
-      key={location.pathname}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
 };
 
 function App() {
@@ -89,17 +72,15 @@ function App() {
       <div className="bg-militar-dark min-h-screen selection:bg-militar-accent selection:text-militar-dark">
         <Navbar />
         <main>
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-              <Route path="/reglamento" element={<PageWrapper><Reglamento /></PageWrapper>} />
-              <Route path="/info-mapa" element={<PageWrapper><InfoMapa /></PageWrapper>} />
-              <Route path="/registro-reportes" element={<PageWrapper><RegistroReportes /></PageWrapper>} />
-              <Route path="/anuncios" element={<PageWrapper><Anuncios /></PageWrapper>} />
-              <Route path="/estadisticas" element={<PageWrapper><Estadisticas /></PageWrapper>} />
-              <Route path="/admin" element={<PageWrapper><Admin /></PageWrapper>} />
-            </Routes>
-          </AnimatePresence>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/reglamento" element={<Reglamento />} />
+            <Route path="/info-mapa" element={<InfoMapa />} />
+            <Route path="/registro-reportes" element={<RegistroReportes />} />
+            <Route path="/anuncios" element={<Anuncios />} />
+            <Route path="/estadisticas" element={<Estadisticas />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
         </main>
         <Footer />
         

@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase/config';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { motion } from 'framer-motion';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -26,17 +25,9 @@ const Hero = () => {
     setQuickForm(prev => ({ ...prev, [name]: value }));
   }, []);
 
-  // Micro-interacción: Sonido de click (Opcional - requiere archivo)
-  const playClick = () => {
-    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
-    audio.volume = 0.2;
-    audio.play().catch(() => {}); // Ignorar errores de autoplay
-  };
-
   const handleQuickRegister = async (e) => {
     e.preventDefault();
     if (!quickForm.username || loading || isRegistered) return;
-    playClick();
 
     setLoading(true);
     try {
@@ -68,50 +59,32 @@ const Hero = () => {
 
   return (
     <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-      {/* Cinematic Video/Image Background */}
+      {/* Cinematic Background with Premium Overlays */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-militar-dark/60 z-10" />
-        {/* Reemplazar src con un video real cuando esté disponible */}
-        <video 
-          autoPlay 
-          muted 
-          loop 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40 scale-105 animate-slow-zoom"
-          poster="https://i.gyazo.com/5f9c6d48c8b4b4e9e0f3e6e8e8e8e8e8.jpg"
-        >
-          <source src="https://cdn.pixabay.com/vimeo/328241416/war-22646.mp4?width=1280&hash=8888888888888888888888888888888888888888" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-militar-dark/80 via-transparent to-militar-dark z-10" />
+        <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center scale-105 animate-slow-zoom" />
+        <div className="absolute inset-0 bg-gradient-to-b from-militar-dark/80 via-militar-dark/40 to-militar-dark" />
+        <div className="absolute inset-0 backdrop-blur-[2px]" />
+        
+        {/* Animated Particles / Fog effect overlay */}
+        <div className="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
       </div>
 
       {/* Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-6 text-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-block px-6 py-2 border border-militar-accent/30 rounded-full bg-militar-accent/5 text-militar-accent text-[10px] md:text-xs uppercase tracking-[0.4em] mb-8 animate-pulse shadow-[0_0_15px_rgba(196,164,86,0.1)]">
-            Torneo Competitivo Oficial eSports
-          </div>
-          
-          <h1 className="text-7xl md:text-9xl font-black mb-6 tracking-tighter uppercase text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] leading-none">
-            500X2 <span className="text-militar-accent block md:inline">TOURNAMENT</span>
-          </h1>
-          
-          <p className="text-xl md:text-3xl text-militar-light/90 mb-14 font-medium tracking-wider max-w-2xl mx-auto italic">
-            “Conquista el mapa. Domina la guerra.”
-          </p>
-        </motion.div>
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <div className="inline-block px-6 py-2 border border-militar-accent/30 rounded-full bg-militar-accent/5 text-militar-accent text-[10px] md:text-xs uppercase tracking-[0.4em] mb-8 animate-pulse shadow-[0_0_15px_rgba(196,164,86,0.1)]">
+          Torneo Competitivo Oficial eSports
+        </div>
+        
+        <h1 className="text-7xl md:text-9xl font-black mb-6 tracking-tighter uppercase text-white drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] leading-none">
+          500X2 <span className="text-militar-accent block md:inline">TOURNAMENT</span>
+        </h1>
+        
+        <p className="text-xl md:text-3xl text-militar-light/90 mb-14 font-medium tracking-wider max-w-2xl mx-auto italic">
+          “Conquista el mapa. Domina la guerra.”
+        </p>
 
         {/* Quick Registration Form */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="max-w-md mx-auto glass-dark p-1 rounded-2xl glow shadow-2xl transition-transform hover:scale-[1.01] duration-500"
-        >
+        <div className="max-w-md mx-auto glass-dark p-1 rounded-2xl glow shadow-2xl transition-transform hover:scale-[1.01] duration-500">
           <div className="bg-militar-dark/40 p-8 rounded-2xl backdrop-blur-xl border border-white/5">
             {isRegistered ? (
               <div className="py-8 animate-in zoom-in duration-500">
@@ -124,7 +97,6 @@ const Hero = () => {
                 <p className="text-militar-light/40 text-xs uppercase tracking-widest font-bold">¡Nos vemos en el campo de batalla!</p>
                 <button 
                   onClick={() => navigate('/registro-reportes')}
-                  onMouseEnter={playClick}
                   className="mt-8 text-militar-accent text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-colors"
                 >
                   Ver mis datos
@@ -153,34 +125,24 @@ const Hero = () => {
                   <button 
                     type="submit"
                     disabled={loading}
-                    onMouseEnter={playClick}
                     className="w-full bg-militar-accent hover:bg-militar-accent/90 text-militar-dark font-black py-5 rounded-xl uppercase tracking-[0.25em] transition-all duration-300 transform active:scale-[0.97] shadow-[0_0_20px_rgba(196,164,86,0.3)] hover:shadow-[0_0_30px_rgba(196,164,86,0.5)] disabled:opacity-50"
                   >
                     {loading ? 'Procesando...' : 'Registrarse Ahora'}
                   </button>
                 </div>
                 {status.msg && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className={`mt-4 text-xs font-bold uppercase tracking-widest ${status.type === 'success' ? 'text-green-500' : 'text-red-500'}`}
-                  >
+                  <div className={`mt-4 text-xs font-bold uppercase tracking-widest ${status.type === 'success' ? 'text-green-500' : 'text-red-500'}`}>
                     {status.msg}
-                  </motion.div>
+                  </div>
                 )}
               </form>
             )}
           </div>
-        </motion.div>
+        </div>
 
         
         {/* Live Status Indicators */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-16 flex flex-wrap justify-center gap-8 text-[10px] md:text-xs uppercase tracking-[0.3em] text-militar-light/50 font-bold"
-        >
+        <div className="mt-16 flex flex-wrap justify-center gap-8 text-[10px] md:text-xs uppercase tracking-[0.3em] text-militar-light/50 font-bold">
           <div className="flex items-center space-x-3 bg-white/5 px-4 py-2 rounded-full border border-white/5">
             <span className="w-2 h-2 bg-green-500 rounded-full animate-ping" />
             <span className="text-green-500">Inscripciones Abiertas</span>
@@ -193,7 +155,7 @@ const Hero = () => {
             <span className="w-2 h-2 bg-blue-500 rounded-full" />
             <span>Velocidad X2</span>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Premium Scroll Indicator */}
